@@ -1,6 +1,7 @@
 import math
 import numpy as np
-from itertools import combinations,permutations
+import pandas as pd
+from itertools import combinations
 
 # Assume the location code for ischool is 1.
 def parking_timeslot():
@@ -26,11 +27,13 @@ def parking_check_schedule():
             check_schedule.append(select_checkzone())
     return check_schedule
 
-def meter():
-    return np.random.random_integers(0,1)
+def meter(idx):
+    if vac.loc[idx, 'students'] > 30:
+        return True
 
-def tow():
-    return np.random.random_integers(0,1)
+def tow(idx):
+    if vac.loc[idx, 'courses'] > 5:
+        return True
 
 timeslot = parking_timeslot()
 courseinfo = []
@@ -39,8 +42,8 @@ for i in range(len(timeslot)):
     courseinfo.append(t)
 print(courseinfo)
 
-# meter = True
-# tow = True
+vac = pd.read_csv('test.csv', encoding='utf8').set_index('index')
+
 ttltkt = 0
 ttltow = 0
 for i in range(100):
@@ -56,17 +59,17 @@ for i in range(100):
         print(check_schedule)
         print("-----------------")
         for i in range(len(courseinfo)):
-                x = courseinfo[i][0]
-                y = courseinfo[i][1]
-                print(check_schedule[x][y])
-                if meter() == 0:
-                    if tow() ==1:
-                        towtime += 1
-                    else:
-                        if 1 in set(check_schedule[x][y]):
-                            tickettime +=1
+            x = courseinfo[i][0]
+            y = courseinfo[i][1]
+            idx = 3*x + y
+            if meter(idx):
+                if tow(idx):
+                    towtime += 1
                 else:
-                    cost += 3
+                    if 1 in set(check_schedule[x][y]):
+                        tickettime +=1
+            else:
+                cost += 3
     ttltkt += tickettime
     ttltow += towtime
 print("tkt",ttltkt/100)

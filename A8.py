@@ -36,17 +36,20 @@ def read_volume_data():
     return vol
 
 def meter_full(idx):
-    if 0.5*vol.loc[idx, 'students'] >= 30:
-        return True
+    if vol.loc[idx, 'students'] >= 60:
+        return np.random.binomial(1, 0.33)
+    else:
+        return 0
 
 def tow(idx):
     if vol.loc[idx, 'courses'] >= 5:
-        return np.random.beta(2,5)
+        return np.random.binomial(1, 0.33)
+        # return np.random.beta(3,10)
     else:
         return 0
 
 if __name__ == "__main__":
-    num_student = 1
+    num_student = 200
     num_iteration = 500
 
     students_course_info = {}
@@ -82,8 +85,8 @@ if __name__ == "__main__":
                     day = students_course_info[std_id][course][0]
                     time_slot = students_course_info[std_id][course][1]
                     idx = 3*day + time_slot
-                    if meter_full(idx) == True:
-                        if tow(idx) > 0.5:
+                    if meter_full(idx) == 1:
+                        if tow(idx) == 1:
                             weekly_tow += 1
                             weekly_cost += 200
                         else:

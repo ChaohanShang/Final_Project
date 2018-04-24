@@ -41,14 +41,13 @@ def meter_full(idx):
 
 def tow(idx):
     if vol.loc[idx, 'courses'] >= 5:
-        return True
-
-def tow_factor():
-    return np.random.randint(2)
+        return np.random.beta(2,5)
+    else:
+        return 0
 
 if __name__ == "__main__":
-    num_student = 300
-    num_iteration = 1000
+    num_student = 1
+    num_iteration = 500
 
     students_course_info = {}
     for std_id in range(num_student):
@@ -84,7 +83,7 @@ if __name__ == "__main__":
                     time_slot = students_course_info[std_id][course][1]
                     idx = 3*day + time_slot
                     if meter_full(idx) == True:
-                        if tow(idx) == True and tow_factor() == 1:
+                        if tow(idx) > 0.5:
                             weekly_tow += 1
                             weekly_cost += 200
                         else:

@@ -27,6 +27,16 @@ The third one is the probability of being checked by parking dept per hour. We d
 The last one is the probability of being towed, it obeys binomial distribution. If the owner of reserved parking space call the towing company, the violated car will be towed. And you need to pay a fee to get your car back.
 
 ## Hypothesis or hypotheses before running the simulation:
+There are two parking methods:
+  1. Parking with permit($675).
+  2. Standard parking. Pay $1/hour on street if there are parking spot available and violate parking if there are no parking        spots. 
+
+The time of ticketing and towing is not considered in the simulation.
+
+Cars will be towed if the reserved parking spots are occupied by onwers. If the car is being towed, there will be no tickets issued.
+
+Ticket would not be waived if getting caught more than once in one time slot. In other words, it is possible to receive at most 3 parking tickets in one time slot.
+  
 
 ## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
 

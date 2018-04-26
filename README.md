@@ -6,16 +6,25 @@ DELETE these lines from TEMPLATE up.
 
 TEMPLATE for your report:
 
-# Title: 
+# Title: Student parking permit, to buy or not?
+--- Parking decision making at iSchool using Monte Carlo Simulation
 
 ## Team Member(s):
-(Note: Don't put your email addresses here (which is public).  If a student wants their NAME hidden as well, due to optional FERPA regulations, they can be listed purely by their GitHub ID).
+Chaohan Shang, Xinyu Tian, Yute Li, Shukai Yao
 
 # Monte Carlo Simulation Scenario & Purpose:
 (be sure to read the instructions given in course Moodle)
 
 ## Simulation's variables of uncertainty
-List and describe your simulation's variables of uncertainty (where you're using pseudo-random number generation). For each such variable, how did you decide the range and probability distribution to use?  Do you think it's a good representation of reality?
+We have 5 variables of uncertainty. 
+
+The first one is the number of onsite courses weekly for each student, the range of values is 1 to 6 and it obeys normal distribution. More courses means longer parking time.
+
+The second one is the probability of parking violation, it obeys binomial distribution. If all meters near iSchool are parked and you don’t want to miss the class, the only choice you have is to park in the reserved parking space.
+
+The third one is the probability of being checked by parking dept per hour. We divide the university into 30 zones and the parking dept checks 3 zones per hour. So that for each zone, the probability of being checked per hour is one tenth. If the zone of iSchool is checked, the violated car will receive a ticket.
+
+The last one is the probability of being towed, it obeys binomial distribution. If the owner of reserved parking space call the towing company, the violated car will be towed. And you need to pay a fee to get your car back.
 
 ## Hypothesis or hypotheses before running the simulation:
 

@@ -13,7 +13,10 @@ TEMPLATE for your report:
 Chaohan Shang, Xinyu Tian, Yute Li, Shukai Yao
 
 # Monte Carlo Simulation Scenario & Purpose:
-(be sure to read the instructions given in course Moodle)
+our project is trying to design a system by using Monte Carlo Simulation for students to decide whether they should purchase parking permit or not. 
+
+Our system has three outcomes basically. When a student pays the meter, he or she may receive a ticket if the payment period is expired. In addition, if a student parks in the parking lot with permit restrictions, the police may ask the tow company to tow the student’s car. This could a large amount for students to pay compares to the parking ticket. However, the student could be lucky without the penalty if the police is not patrol in this area. The result of the probability whether the student may receive a ticket or be towed is calculated with the database which are the course schedule and the number of students at the particular time period. This simulation can help student to decide whether they should purchase a parking permit or keep paying the meters. So they can know which option is more affordable.
+
 
 ## Simulation's variables of uncertainty
 We have 4 variables of uncertainty. 

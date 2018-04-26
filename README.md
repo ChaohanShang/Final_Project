@@ -48,6 +48,7 @@ Here, we compare the annual price of student parking permit with the total costs
 (TODO: Visualization)
 As we did experiments over different iteration times, we obtained the result shown as above. 
 
+We changed the parameters in the distributions to make the results more realistic.
 
 ## Instructions on how to use the program:
 (TODO: user interaction?)

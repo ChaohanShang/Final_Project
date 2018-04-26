@@ -16,7 +16,7 @@ Chaohan Shang, Xinyu Tian, Yute Li, Shukai Yao
 (be sure to read the instructions given in course Moodle)
 
 ## Simulation's variables of uncertainty
-We have 5 variables of uncertainty. 
+We have 4 variables of uncertainty. 
 
 The first one is the number of onsite courses weekly for each student, the range of values is 1 to 6 and it obeys normal distribution. More courses means longer parking time.
 

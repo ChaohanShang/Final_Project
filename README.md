@@ -43,7 +43,15 @@ Ticket would not be waived if getting caught more than once in one time slot. In
 
 ## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
 
+Here, we compare the annual price of student parking permit with the total costs of meters parking and possible parking violation. Given the assumptions that the meters will be full if many students attend the classes at the same time, and the students will take the risk to park at the private parking in some cases if there's no meters available, we realized that purchasing the parking permit ($675) may be more economical when comparing with the expected total costs without a permit ($1222 = meters $372 + tickets $250 + tows $600).
+
+(TODO: Visualization)
+As we did experiments over different iteration times, we obtained the result shown as above. 
+
+
 ## Instructions on how to use the program:
+(TODO: user interaction?)
 
 ## All Sources Used:
-
+* [itertools.combinations](https://docs.python.org/3/library/itertools.html?highlight=combinations#itertools.combinations)
+* [numpy.random](https://docs.scipy.org/doc/numpy-1.14.0/reference/routines.random.html)

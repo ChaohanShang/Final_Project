@@ -13,9 +13,9 @@ TEMPLATE for your report:
 Chaohan Shang, Xinyu Tian, Yute Li, Shukai Yao
 
 # Monte Carlo Simulation Scenario & Purpose:
-our project is trying to design a system by using Monte Carlo Simulation for students to decide whether they should purchase parking permit or not. 
+The purpose of this project is to help iSchool students to decide whether they should buy parking permit or not by using Monte Carlo Simulation.
 
-Our system has three outcomes basically. When a student pays the meter, he or she may receive a ticket if the payment period is expired. In addition, if a student parks in the parking lot with permit restrictions, the police may ask the tow company to tow the student’s car. This could a large amount for students to pay compares to the parking ticket. However, the student could be lucky without the penalty if the police is not patrol in this area. The result of the probability whether the student may receive a ticket or be towed is calculated with the database which are the course schedule and the number of students at the particular time period. This simulation can help student to decide whether they should purchase a parking permit or keep paying the meters. So they can know which option is more affordable.
+Our system has three outcomes basically. A student may choose to park on the street if there are meters available. Otherwise, it's likely that the student will violate the parking rules and park at private parking. In this way, the student will probably receive a ticket for the violation. In addition, if a student parks in the parking lot with permit restrictions, the holder may ask the tow company to tow the student’s car. This could a large amount for students to pay compares to the parking ticket. However, the student could be lucky without the penalty if the parking department does not patrol in this area an nobody tows his/her car. The result of the probability whether the student may receive a ticket or be towed is calculated with the dataset containing course schedule and the number of students at the particular time period. This simulation can help students to decide whether they should purchase a parking permit or keep paying the meters.
 
 
 ## Simulation's variables of uncertainty

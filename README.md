@@ -21,7 +21,7 @@ Our system has three outcomes basically. A student may choose to park on the str
 ## Simulation's variables of uncertainty
 We have 4 variables of uncertainty. 
 
-The first one is the number of onsite courses weekly for each student, the range of values is 1 to 6 and it obeys normal distribution. More courses means longer parking time.
+The first one is the number of onsite courses weekly for each student, which obeys a normal distribution whose mean is 3 and standard deviation is 1. More courses means longer parking time.
 
 The second one is the probability of parking violation, it obeys binomial distribution. If all meters near iSchool are parked and you don’t want to miss the class, the only choice you have is to park in the reserved parking space.
 

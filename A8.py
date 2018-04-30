@@ -117,15 +117,14 @@ if __name__ == "__main__":
             continue
         else:
             break
-    print(details_flag)
     max_depth = max_iter * num_student
     print('Maximum depth for each simulation: ' + str(max_depth) + ', or the mean is calculated against ' + str(max_depth)+ ' cases.')
+    final_cost = 0
     for sim in range(num_sim):
         average_cost_by_iter = {}    # for each line in visualization
         print('=== Simulation {:<} ==='.format(sim + 1))
         for num_iter in range(1, max_iter + 1):     # try different depths
             depth = num_iter * num_student
-            print('--- Depth {:<} ---'.format(depth))
             total_ticket = total_tow = total_cost = 0
             for iter in range(num_iter):    # each iteration in a given depth
                 # assume student's schedule is fixed through the year
@@ -152,11 +151,16 @@ if __name__ == "__main__":
                     total_tow += weekly_tow
                     total_cost += weekly_cost
             average_cost = total_cost / depth
-            print('Ticket{:>12.1f}'.format(total_ticket / (depth)))
-            print('Tow{:>15.1f}'.format(total_tow / (depth)))
-            print("Average Cost {:>4.1f}".format(average_cost))
+            if details_flag == True:
+                print('--- Depth {:<} ---'.format(depth))
+                print('Ticket{:>12.1f}'.format(total_ticket / (depth)))
+                print('Tow{:>15.1f}'.format(total_tow / (depth)))
+                print("Average Cost {:>4.1f}".format(average_cost))
             average_cost_by_iter[depth] = average_cost
         plt.plot(average_cost_by_iter.keys(), average_cost_by_iter.values())
+        print("Average Cost {:>4.1f} at Simulation {}".format(np.mean(list(average_cost_by_iter.values())), sim + 1))
+        final_cost += np.sum(list(average_cost_by_iter.values()))
+    print("Final Average Cost: " + str(round(final_cost / (num_sim * max_iter), 2)))
     # visualize the results by a bunch of lines
     plt.ylim((0.75 * annual_parking_permit, 1.25 * annual_parking_permit))
     plt.xticks(range(0, max_depth + 1, 5 * num_student))

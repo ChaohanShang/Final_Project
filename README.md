@@ -1,58 +1,78 @@
-Create a FORK of this repository to store your code, data, and documentation for the final project. Detailed instructions for this assignment are in the course Moodle site.  The reason I'm asking you to fork this empty repository instead of creating a stand-alone repository is that it will be much easier for me and all students in the course to find all of our projects for code review and for grading. You can even get code review from students in the other section of IS590PR this way.
+# Student parking permit, to buy or not? --- Parking Decision Making at iSchool using Monte Carlo Simulation
 
-Even though your fork of this repository shall be public, you'll still need to explicitly add any students on your team as Collaborators in the Settings. That way you can grant them write privileges.
-
-DELETE these lines from TEMPLATE up.
-
-TEMPLATE for your report:
-
-# Title: Student parking permit, to buy or not?
---- Parking decision making at iSchool using Monte Carlo Simulation
-
-## Team Member(s):
+## Team Members:
 Chaohan Shang, Xinyu Tian, Yute Li, Shukai Yao
 
-# Monte Carlo Simulation Scenario & Purpose:
-The purpose of this project is to help iSchool students to decide whether they should buy parking permit or not by using Monte Carlo Simulation.
+## Scenario & Purpose
+The purpose of this project is to help iSchool students to decide whether purchase parking permit or not by using Monte Carlo Simulation.
 
-Our system has three outcomes basically. A student may choose to park on the street if there are meters available. Otherwise, it's likely that the student will violate the parking rules and park at private parking. In this way, the student will probably receive a ticket for the violation. In addition, if a student parks in the parking lot with permit restrictions, the holder may ask the tow company to tow the student’s car. This could a large amount for students to pay compares to the parking ticket. However, the student could be lucky without the penalty if the parking department does not patrol in this area an nobody tows his/her car. The result of the probability whether the student may receive a ticket or be towed is calculated with the dataset containing course schedule and the number of students at the particular time period. This simulation can help students to decide whether they should purchase a parking permit or keep paying the meters.
+As a student drives his/her car to the iSchool building for courses/events, s/he has the following options for parking.
+With a parking permit ($660 per year), the student can park the car at the reserved spots.
+Without a parking permit, s/he prefers parking on the street if there are meters available ($1 per hour).
+Otherwise, student may possibly take risks of violating the parking rules and park at the private parking, especially in a rush.
+In this way, the student is likely to receive a ticket ($50 per time) for the violation if the UI parking department checks the cars around iSchool.
+Meanwhile, the holder of the parking spot may ask the tow company to tow the student’s car.
+This could results in a huge amount ($200 on average) for the student to pay compares to the parking ticket.
+The student might be lucky (without any loss) if the parking department does not patrol in this area and nobody tows his/her car.
+Finally, we compare the average parking cost without parking permits over students to the price of annual parking permits to provide the advice for making decisions.
 
+Here are some basic facts in the scenario.
+* We only consider the working hours of weekdays, 8am - 5pm from Monday to Friday, when the parking rules are enforced.
+** The working hours are divided into 3 time slots**: morning (8am - 11am), noon (11am - 2pm), afternoon (2pm - 5pm). So there are 15 time slots in a week;
+* There are up to 60 meters around the iSchool (along Daniel Street, Fifth Street, and Sixth Street), and about 20 private parking spots.
+Among those private ones, there are usually 5 spots unoccupied;
+* The annual parking permit for students is $660;
+* The violation ticket for private parking is $50 per time, and a tow costs $200 on average.
+
+## Assumptions and Hypotheses
+To simplify the scenario, we make the following assumptions:
+* As long as a student comes to the iSchool building in any time during a time slot, s/he will park the car for the entire 3 hours;
+* Students always pay the parking meters at any time so that it's impossible for meters to expire.
+(tickets on street parking are not considered);
+* The weekly schedule of a student is fixed through the year (32 weeks);
+* The UI parking department changes their schedule to enforce parking regulations every week;
+* The time of ticketing and towing is not considered in the simulation;
+* If the car is being towed, there will be no parking tickets issued;
+* Ticket would not be waived if getting caught more than once in one time slot.
+In other words, it is possible to receive at most 3 parking tickets in one time slot.
 
 ## Simulation's variables of uncertainty
-We have 4 variables of uncertainty. 
+There are 5 variables of uncertainty.
 
-The first one is the number of onsite courses weekly for each student, which obeys a normal distribution whose mean is 3 and standard deviation is 1. More courses means longer parking time.
+* The times a student needs parking at iSchool per week, which obeys a normal distribution whose mean is 3 and standard deviation is 1;
 
-The second one is the probability of parking violation, it obeys binomial distribution. If all meters near iSchool are parked and you don’t want to miss the class, the only choice you have is to park in the reserved parking space.
+* The probability that a student comes to iSchool is proportional to the total number of students registered in the onsite courses in the given time slot;
+![time_slot_distribution](https://github.com/ChaohanShang/Final_Project/blob/master/prob.png "Probability that a student comes to iSchool")
 
-The third one is the probability of being checked by parking dept per hour. We divide the university into 30 zones and the parking dept checks 3 zones per hour. So that for each zone, the probability of being checked per hour is one tenth. If the zone of iSchool is checked, the violated car will receive a ticket.
+* The probability of parking violation, which obeys binomial distribution with p = 0.33.
+If all meters near iSchool are occupied and you don’t want to miss the class, you may violate the rules and park in the reserved parking space. You may also find farther but safer meters;
 
-The last one is the probability of being towed, it obeys binomial distribution. If the owner of reserved parking space call the towing company, the violated car will be towed. And you need to pay a fee to get your car back.
+* The probability of being towed, which obeys binomial distribution with p = 0.1.
+If the owner of reserved parking spot calls the towing company, the violated car will be towed. And you need to pay a fee to get your car back;
 
-## Hypothesis or hypotheses before running the simulation:
-There are two parking methods:
-  1. Parking with permit($675).
-  2. Standard parking. Pay $1/hour on street if there are parking spot available and violate parking if there are no parking        spots. 
+* The zones checked by the UI parking department every hour. They pick up 3 zones out of 30 randomly, in other words, it follows a uniform distribution.
 
-The time of ticketing and towing is not considered in the simulation.
+## Analytical Summary of your findings:
 
-Cars will be towed if the reserved parking spots are occupied by onwers. If the car is being towed, there will be no tickets issued.
+Here, we compare the annual price of student parking permit with the total costs of meters parking and possible parking violation.
+The overall average cost for each student (200 students, 50 iterations per simulation, 10 simulations) is $656.9, which is slightly smaller than $660.
 
-Ticket would not be waived if getting caught more than once in one time slot. In other words, it is possible to receive at most 3 parking tickets in one time slot.
-  
+![result](https://github.com/ChaohanShang/Final_Project/blob/master/simulation.png "Visualization of the simulation")
 
-## Analytical Summary of your findings: (e.g. Did you adjust the scenario based on previous simulation outcomes?  What are the management decisions one could make from your simulation's output, etc.)
+As shown in the plot above, the expected total parking cost fluctuates at different depth and simulations, almost around $660.
+However, considering the parking tickets because of the meters expired, purchasing a parking permit might be a wise choice.
 
-Here, we compare the annual price of student parking permit with the total costs of meters parking and possible parking violation. Given the assumptions that the meters will be full if many students attend the classes at the same time, and the students will take the risk to park at the private parking in some cases if there's no meters available, we realized that purchasing the parking permit ($675) may be more economical when comparing with the expected total costs without a permit ($1222 = meters $372 + tickets $250 + tows $600).
-
-(TODO: Visualization)
-As we did experiments over different iteration times, we obtained the result shown as above. 
-
-We changed the parameters in the distributions to make the results more realistic.
+The result could be more realistic by using better distributions and choosing more accurate parameters.
 
 ## Instructions on how to use the program:
-(TODO: user interaction?)
+
+Please specify the number of simulations you want to do and the maximum iteration times by keyboard input.
+The program will return the expected parking cost (final average cost) without purchasing a parking permit.
+Moreover, there is a plot illustrating the results obtained at different depths.
+
+You may also change the probabilities and assumptions by altering the values of parameters.
 
 ## All Sources Used:
-* [itertools.combinations](https://docs.python.org/3/library/itertools.html?highlight=combinations#itertools.combinations)
+* [Parking Rates at UI Parking Department](http://www.parking.illinois.edu/parking_items/rates)
 * [numpy.random](https://docs.scipy.org/doc/numpy-1.14.0/reference/routines.random.html)
+* [matplotlib.pyplot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.html)

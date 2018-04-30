@@ -2,8 +2,6 @@ import math
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-import warnings
-warnings.filterwarnings('ignore')
 
 def read_iSchool_schedule(filepath ='weekly_schedule.csv'):
     """
@@ -22,7 +20,7 @@ def get_student_weekly_distribution(schedule):
     :param schedule: the DataFrame imported by read_iSchool_schedule()
     :return: a 1D numpy array whose length is 15
     """
-    student_num_array = schedule['students'].reshape((1, len(schedule['students'])))
+    student_num_array = schedule['students'].values.reshape((1, len(schedule['students'])))
     prob_array = (student_num_array / np.sum(student_num_array))[0]
     plt.plot(range(15), prob_array, color = 'darkorange')
     plt.fill_between(range(15), prob_array, [0] * 15, color = 'darkorange')

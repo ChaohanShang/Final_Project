@@ -42,6 +42,7 @@ There are 5 variables of uncertainty.
 * The times a student needs parking at iSchool per week, which obeys a normal distribution whose mean is 3 and standard deviation is 1;
 
 * The probability that a student comes to iSchool is proportional to the total number of students registered in the onsite courses in the given time slot;
+
 ![time_slot_distribution](https://github.com/ChaohanShang/Final_Project/blob/master/prob.png "Probability that a student comes to iSchool")
 
 * The probability of parking violation, which obeys binomial distribution with p = 0.33.

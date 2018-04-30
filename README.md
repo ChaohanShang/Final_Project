@@ -18,7 +18,7 @@ Finally, we compare the average parking cost without parking permits over studen
 
 Here are some basic facts in the scenario.
 * We only consider the working hours of weekdays, 8am - 5pm from Monday to Friday, when the parking rules are enforced.
-** The working hours are divided into 3 time slots**: morning (8am - 11am), noon (11am - 2pm), afternoon (2pm - 5pm). So there are 15 time slots in a week;
+**The working hours are divided into 3 time slots**: morning (8am - 11am), noon (11am - 2pm), afternoon (2pm - 5pm). So there are 15 time slots in a week;
 * There are up to 60 meters around the iSchool (along Daniel Street, Fifth Street, and Sixth Street), and about 20 private parking spots.
 Among those private ones, there are usually 5 spots unoccupied;
 * The annual parking permit for students is $660;

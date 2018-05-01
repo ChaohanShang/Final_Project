@@ -27,8 +27,8 @@ Among those private ones, there are usually 5 spots unoccupied;
 ## Assumptions and Hypotheses
 To simplify the scenario, we make the following assumptions:
 * As long as a student comes to the iSchool building in any time during a time slot, s/he will park the car for the entire 3 hours;
-* Students always pay the parking meters at any time so that it's impossible for meters to expire.
-(tickets on street parking are not considered);
+* A student always pays the parking meters at any time so that it's impossible for meters to expire.
+(tickets on street parking are not considered) or a student may never pay any meter;
 * The weekly schedule of a student is fixed through the year (32 weeks);
 * The UI parking department changes their schedule to enforce parking regulations every week;
 * The time of ticketing and towing is not considered in the simulation;
@@ -68,6 +68,7 @@ The result could be more realistic by using better distributions and choosing mo
 ## Instructions on how to use the program:
 
 Please specify the number of simulations you want to do and the maximum iteration times by keyboard input.
+You may choose either always pay all the meters or never pay any meter (meter violation).
 The program will return the expected parking cost (final average cost) without purchasing a parking permit.
 Moreover, there is a plot illustrating the results obtained at different depths.
 
@@ -75,5 +76,6 @@ You may also change the probabilities and assumptions by altering the values of 
 
 ## All Sources Used:
 * [Parking Rates at UI Parking Department](http://www.parking.illinois.edu/parking_items/rates)
+* [Parking Meter Violation Fine Structure](http://parking.illinois.edu/parking-news/New-parking-meter-fine-structure)
 * [numpy.random](https://docs.scipy.org/doc/numpy-1.14.0/reference/routines.random.html)
 * [matplotlib.pyplot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.html)

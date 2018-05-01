@@ -93,6 +93,7 @@ if __name__ == "__main__":
     annual_parking_permit = 660     # FY18 Student Rates - 12 Month Permit
     # allow users to skip the detailed results for every iteration
     details_flag = True
+    meters_violation = 0
     while True:
         details_flag_str = input('Would you like to view the results for every iteration? (Y/N)\n')
         if len(details_flag_str) == 0:
@@ -101,6 +102,18 @@ if __name__ == "__main__":
             details_flag = False
             break
         elif details_flag_str[0] in ['Y', 'y', 'T', 't']:
+            break
+        else:
+            print(('Please enter Yes (Y) or No (N).'))
+            continue
+    while True:
+        meters_violation_str = input('Will you violate parking meters? (Y/N)\n')
+        if len(meters_violation_str) == 0:
+            continue
+        if meters_violation_str[0] in ['N', 'n', 'F', 'f']:
+            break
+        elif meters_violation_str[0] in ['Y', 'y', 'T', 't']:
+            meters_violation = 1
             break
         else:
             print(('Please enter Yes (Y) or No (N).'))
@@ -127,10 +140,12 @@ if __name__ == "__main__":
             for iter in range(num_iter):    # each iteration in a given depth
                 # assume student's schedule is fixed through the year
                 students_course_info = [list(get_student_parking_slots(prob_array, mu = 3, sigma = 1)) for std_id in range(num_student)]
+                students_street_tickets = np.zeros(num_student)
                 for week in range(32):  # 32 working weeks per year
                     weekly_ticket = weekly_tow = weekly_cost = 0
                     check_schedule_by_hour = get_parking_dept_enforcement_schedule(30, 3)   # randomly pick 3 out of 30
                     check_schedule_by_slot = np.array(check_schedule_by_hour).reshape(5, 3, 9)  # build the enforcement schedule of the parking department
+                    std_id = 0
                     for each_std_courses in students_course_info:
                         for idx in each_std_courses:
                             day, time_slot = (math.floor(idx / 3), idx % 3)     # convert the index to days and slots (3 -> (1,0) - Tuesday morning)
@@ -144,19 +159,32 @@ if __name__ == "__main__":
                                         weekly_ticket += 1
                                         weekly_cost += 50
                             else:   # the student pays at meters
-                                weekly_cost += 3
+                                if meters_violation == 1:
+                                    if 1 in set(check_schedule_by_slot[day][time_slot]):
+                                        students_street_tickets[std_id] += 1
+                                        if students_street_tickets[std_id] >= 3:
+                                            weekly_ticket += 1
+                                            weekly_cost += 40
+                                        elif students_street_tickets[std_id] >= 2:
+                                            weekly_ticket += 1
+                                            weekly_cost += 25
+                                        else:
+                                            weekly_ticket += 1
+                                else:
+                                    weekly_cost += 3
+                        std_id += 1
                     total_ticket += weekly_ticket
                     total_tow += weekly_tow
                     total_cost += weekly_cost
             average_cost = total_cost / depth
             if details_flag == True:
                 print('--- Depth {:<} ---'.format(depth))
-                print('Ticket{:>12.1f}'.format(total_ticket / (depth)))
-                print('Tow{:>15.1f}'.format(total_tow / (depth)))
-                print("Average Cost {:>4.1f}".format(average_cost))
+                print('Ticket {:>12.1f}'.format(total_ticket / (depth)))
+                print('Tow {:>15.1f}'.format(total_tow / (depth)))
+                print("Average Cost {:>6.1f}".format(average_cost))
             average_cost_by_iter[depth] = average_cost
         plt.plot(average_cost_by_iter.keys(), average_cost_by_iter.values())
-        print("Average Cost {:>4.1f} at Simulation {}".format(np.mean(list(average_cost_by_iter.values())), sim + 1))
+        print("Average Cost {:>6.1f} at Simulation {}".format(np.mean(list(average_cost_by_iter.values())), sim + 1))
         final_cost += np.sum(list(average_cost_by_iter.values()))
     print("Final Average Cost: " + str(round(final_cost / (num_sim * max_iter), 2)))
     # visualize the results by a bunch of lines

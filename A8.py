@@ -178,7 +178,6 @@ def simulate_process(max_iter, num_student, schedule, prob_array, mu, sigma):
             print('Tow {:>15.1f}'.format(total_result[1] / (depth)))
             print("Average Cost {:>6.1f}".format(average_cost))
         average_cost_by_iter[depth] = average_cost
-    plt.plot(list(average_cost_by_iter.keys()), list(average_cost_by_iter.values()))
     print("(Parking at iSchool {} times per week) Average Cost {:>6.1f} at Simulation {}".format(mu, np.mean(list(average_cost_by_iter.values())), sim + 1))
     return average_cost_by_iter
 
@@ -217,12 +216,14 @@ if __name__ == "__main__":
     for sim in range(num_sim):
         heavy_average_cost_by_iter = simulate_process(max_iter, num_student, schedule, prob_array, mu = 5, sigma = 1)
         light_average_cost_by_iter = simulate_process(max_iter, num_student, schedule, prob_array, mu = 2, sigma = 1)
+        plt.plot(list(heavy_average_cost_by_iter.keys()), list(heavy_average_cost_by_iter.values()))
+        plt.plot(list(light_average_cost_by_iter.keys()), list(light_average_cost_by_iter.values()))
         heavy_final_total_cost += np.sum(list(heavy_average_cost_by_iter.values()))
         light_final_total_cost += np.sum(list(light_average_cost_by_iter.values()))
         print("Final Average Cost for Heavy Workload Students: " + str(round(heavy_final_total_cost / (num_sim * max_iter), 1)))
         print("Final Average Cost for Light Workload Students: " + str(round(light_final_total_cost / (num_sim * max_iter), 1)))
     # visualize the results by a bunch of lines
-    plt.ylim((0.75 * annual_parking_permit, 1.25 * annual_parking_permit))
+    plt.ylim((200, 1100))
     plt.xticks(range(0, max_depth + 1, 5 * num_student))
     plt.axhline(y=annual_parking_permit, linestyle='dashdot', color='red')
     plt.xlabel('Depth (Number of Students * Iteration Times)')

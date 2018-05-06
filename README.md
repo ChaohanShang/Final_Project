@@ -59,7 +59,7 @@ If the owner of reserved parking spot calls the towing company, the violated car
 ## Analytical Summary of your findings:
 
 Here, we compare the annual price of student parking permit with the total costs of meters parking and possible parking violation.
-The overall average cost for heavy workload students is $921.3, whereas $371.3 for light workload students.
+The overall average cost is $921.3 for heavy workload students, and $371.3 for light workload students.
 
 ![result](https://github.com/ChaohanShang/Final_Project/blob/master/simulation.png "Visualization of the simulation")
 

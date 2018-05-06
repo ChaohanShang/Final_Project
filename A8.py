@@ -15,7 +15,7 @@ def get_student_weekly_distribution(schedule):
     """
     Given the number of students on each time slot,
     generate the probability that a student comes to iSchool on a particular time slot.
-    Assume the more students registered in the onsite courses during a time span,
+    Assume the more students registered in the on-site courses during a time span,
     the more likely a student comes to the iSchool building to attend the course.
     :param schedule: the DataFrame imported by read_iSchool_schedule()
     :return: a 1D numpy array whose length is 15
@@ -37,6 +37,9 @@ def get_student_parking_blocks(prob_array, mu: int = 3, sigma: int = 1):
     The function selects several time blocks that a student comes to the iSchool building and need parking in a week
     associated with the distribution of student numbers over time blocks.
     Assume the number of time blocks obeys a normal distribution N(3,1).
+    :param prob_array: a 1D numpy array whose length is 15
+    :param mu: the center of normal distribution
+    :param sigma: the standard deviation of normal distribution
     :return: A tuple of integers ranging from 0 to 14, indicating the time blocks a student needs parking
     """
     num_blocks = int(np.random.normal(loc = mu, scale = sigma))
@@ -61,7 +64,7 @@ def violate_parking_rules(schedule, idx: int, meters_capacity: int = 60, prob_vi
     Given the weekly schedule of courses, meters capacity and the probability of violating parking rules,
     decide whether a student will violate parking rules or not.
     :param schedule: the DataFrame imported by read_iSchool_schedule()
-    :param idx: int, ranging from 0 to 14, indicates the time slot
+    :param idx: int, ranging from 0 to 14, indicates the time index
     :param meters_capacity: the number of meters available around the iSchool
     :param prob_violate: float, the probability a student will violate the parking rules if no meters are available
     :return: 0 - False, 1 - True
@@ -76,8 +79,8 @@ def being_towed(schedule, idx, private_capacity = 5, prob_tow = 0.1):
     Given the weekly schedule of courses, private parking capacity and the probability of being towed,
     decide whether a car will be towed or not.
     :param schedule: the DataFrame imported by read_iSchool_schedule()
-    :param idx: int, ranging from 0 to 14, indicates the time slot
-    :param private_capacity: the number of private parkings at iSchool
+    :param idx: int, ranging from 0 to 14, indicates the time index
+    :param private_capacity: the number of private parking at iSchool
     :param prob_tow: float, the probability the professors, staffs will call the towing service if no private parking is available
     :return: 0 - False, 1 - True
     """
@@ -96,23 +99,23 @@ def violate_meters(prob = 0.1):
 
 def idx_2_day_and_time_block(idx):
     """
-
-    :param idx:
-    :return:
+    Convert the time block index into the tuple of day and time block.
+    :param idx: int, ranging from 0 to 14, indicates the time index
+    :return: tuple, the first element is the day, the second is the time block in a specific day (0-2)
     """
     day, time_block = (math.floor(idx / 3), idx % 3)  # convert the index to days and blocks (3 -> (1,0) - Tuesday morning)
     return day, time_block
 
 def simulate_violate(schedule, idx, check_schedule_by_slot, std_id, weekly_result, prob_violate_array):
     """
-
-    :param schedule:
-    :param idx:
-    :param check_schedule_by_slot:
-    :param std_id:
-    :param weekly_result:
-    :param prob_violate_array:
-    :return:
+    Simulate the result of violating private parking for individuals.
+    :param schedule: the DataFrame imported by read_iSchool_schedule()
+    :param idx: int, ranging from 0 to 14, indicates the time index
+    :param check_schedule_by_slot: a list of the zone numbers being checked by the parking department
+    :param std_id: int, used in the iteration, to retrieve the probability of violation for a specific student
+    :param weekly_result: a tuple contains 3 ints, weekly_ticket, weekly_tow and weekly_cost
+    :param prob_violate_array: a 1D array of floats, the probability of violating private parking for each student.
+    :return: the updated weekly_result and prob_violate_array after the process.
     """
     (weekly_ticket, weekly_tow, weekly_cost) = weekly_result
     day, time_block = idx_2_day_and_time_block(idx)
@@ -129,6 +132,15 @@ def simulate_violate(schedule, idx, check_schedule_by_slot, std_id, weekly_resul
     return weekly_result, prob_violate_array
 
 def simulate_meter(idx, check_schedule_by_slot, std_id, students_street_tickets, weekly_result):
+    """
+    Simulate the result of violating private parking for individuals.
+    :param idx: int, ranging from 0 to 14, indicates the time index
+    :param check_schedule_by_slot: a list of the zone numbers being checked by the parking department
+    :param std_id: int, used in the iteration, to store the times that the student violates rules
+    :param students_street_tickets: a dict, the keys are std_ids and the values are the times they receive street tickets
+    :param weekly_result: a tuple contains 3 ints, weekly_ticket, weekly_tow and weekly_cost
+    :return: the updated weekly_result
+    """
     (weekly_ticket, weekly_tow, weekly_cost) = weekly_result
     day, time_block = idx_2_day_and_time_block(idx)
     if violate_meters(prob=0.1) == 1:
@@ -148,6 +160,16 @@ def simulate_meter(idx, check_schedule_by_slot, std_id, students_street_tickets,
     return weekly_result
 
 def simulate_process(max_iter, num_student, schedule, prob_array, mu, sigma):
+    """
+    Simulate the logical process, return a dict of all the results obtained in a time for visualization.
+    :param max_iter: int, the maximum number of iterations done in each time of simulation
+    :param num_student: int, the number of iSchool students given in the assumption
+    :param schedule: the DataFrame imported by read_iSchool_schedule()
+    :param prob_array: a 1D numpy array whose length is 15
+    :param mu: the center of normal distribution
+    :param sigma: the standard deviation of normal distribution
+    :return: dict, the keys are number of depth, the values are expectations
+    """
     average_cost_by_iter = {}  # for each line in visualization
     print('=== Simulation {:<} (Parking at iSchool {} times per week) ==='.format(sim + 1, mu))
     for num_iter in range(1, max_iter + 1):  # try different depths

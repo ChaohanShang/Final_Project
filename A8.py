@@ -102,8 +102,19 @@ def idx_2_day_and_time_block(idx):
     Convert the time block index into the tuple of day and time block.
     :param idx: int, ranging from 0 to 14, indicates the time index
     :return: tuple, the first element is the day, the second is the time block in a specific day (0-2)
+    >>> idx_2_day_and_time_block(10)
+    (3, 1)
+    >>> idx_2_day_and_time_block(14)
+    (4, 2)
+    >>> idx_2_day_and_time_block(100)
+    Traceback (most recent call last):
+        ...
+    ValueError
     """
-    day, time_block = (math.floor(idx / 3), idx % 3)  # convert the index to days and blocks (3 -> (1,0) - Tuesday morning)
+    if 0 <= idx <= 14:
+        day, time_block = (math.floor(idx / 3), idx % 3)  # convert the index to days and blocks (3 -> (1,0) - Tuesday morning)
+    else:
+        raise ValueError
     return day, time_block
 
 def simulate_violate(schedule, idx, check_schedule_by_slot, std_id, weekly_result, prob_violate_array):
